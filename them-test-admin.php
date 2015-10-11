@@ -1,0 +1,103 @@
+<?php
+/*
+Plugin Name: Theme Test Admin
+Plugin URI: http://www.kigurumi.asia
+Description:
+Author: Nakashima Masahiro
+Version: 1.0.0
+Author URI: http://www.kigurumi.asia
+Text Domain: TTA
+Domain Path: /languages/
+*/
+define( 'TTA_VERSION', '1.0.0' );
+define( 'TTA_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+define( 'TTA_PLUGIN_NAME', trim( dirname( TTA_PLUGIN_BASENAME ), '/' ) );
+define( 'TTA_PLUGIN_DIR', untrailingslashit( dirname( __FILE__ ) ) );
+define( 'TTA_PLUGIN_URL', untrailingslashit( plugins_url( '', __FILE__ ) ) );
+
+require_once TTA_PLUGIN_DIR . '/classes/class.core.php';
+
+class Theme_Test_Admin extends TTA_Core {
+    protected $textdomain = 'TTA';
+
+    /**
+     * __construct
+     */
+    public function __construct() {
+        //actions - plugins_loaded
+        add_action( 'init', array( $this, 'load_files' ) );
+        //filters
+        add_filter( 'template', array( $this, 'template_filter' ) );
+        add_filter( 'stylesheet', array( $this, 'stylesheet_filter' ) );
+        // プラグインが有効・無効化されたとき
+        register_activation_hook( __FILE__, array( $this, 'activation_hook' ) );
+        register_deactivation_hook( __FILE__, array( $this, 'deactivation_hook' ) );
+        register_uninstall_hook( __FILE__, array( $this, 'uninstall_hook' ) );
+    }
+
+    /**
+     * load_files
+     */
+    public function load_files() {
+        // Classes
+        include_once TTA_PLUGIN_DIR . '/classes/class.admin.php';
+    }
+
+    /**
+     * apply_test_theme
+     */
+    function apply_test_theme() {
+        //GETでも変えれるようにする
+        if ( isset( $_GET['theme'] ) && $this->get_parameter() ) {
+            $theme_object = wp_get_theme( esc_html( $_GET['theme'] ) );
+            return $theme_object;
+        }
+
+        // ログイン状態とレベルをチェック
+        if ( current_user_can( $this->get_level() ) && $this->is_enabled() ) {
+
+            // 現在の設定されているテーマを取得
+            if ( ! $theme = $this->get_theme() ) {
+                return false;
+            }
+
+            // 設定されているテーマがあれば取得する
+            $theme_object = wp_get_theme( $theme );
+            if ( !empty( $theme_object ) ) {
+                if ( isset( $theme_object->Status ) && $theme_object->Status != 'publish' ) {
+                    return false;
+                }
+                return $theme_object;
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * テンプレートを設定
+     */
+    function template_filter( $template ) {
+        $theme = $this->apply_test_theme();
+        if ( $theme === false ) {
+            return $template;
+        }
+        return $theme->get_template();
+    }
+
+
+    /**
+     * スタイルシートを設定
+     */
+    function stylesheet_filter( $stylesheet ) {
+        $theme = $this->apply_test_theme();
+        if ( $theme === false ) {
+            return $stylesheet;
+        }
+        return $theme->get_stylesheet();
+    }
+}
+$theme_test_admin = new Theme_Test_Admin();
