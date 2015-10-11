@@ -5,9 +5,12 @@ class WPTT_Admin extends WPTT_Core {
      * __construct
      */
     function __construct() {
-        add_action( 'admin_init', array( $this, 'admin_init' ) );
-        add_action( 'admin_menu', array( $this, 'add_pages' ) );
-        add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+        //プラグインページのみに制限
+        if ( isset( $_REQUEST["page"] ) && $_REQUEST["page"] == WPTT_PLUGIN_NAME ) {
+            add_action( 'admin_init', array( $this, 'admin_init' ) );
+            add_action( 'admin_menu', array( $this, 'add_pages' ) );
+            add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+        }
     }
 
     /**
@@ -48,16 +51,19 @@ class WPTT_Admin extends WPTT_Core {
         if ( isset( $_POST['_wpnonce'] ) && $_POST['_wpnonce'] ) {
             $errors = new WP_Error();
             $updates = new WP_Error();
+
             if ( check_admin_referer( 'wp-theme-test', '_wpnonce' ) ) {
 
                 //オプションを設定
                 $theme = esc_html( $_POST['theme'] );
-                $level = esc_html( $_POST['level'] );
+                foreach ( $_POST['capabilities'] as $key => $value ) {
+                    $capabilities[] = esc_html( $value );
+                }
                 $parameter = esc_html( $_POST['parameter'] );
 
                 $options = get_option( WPTT_PLUGIN_NAME );
                 $options['theme'] = $theme;
-                $options['level'] = $level;
+                $options['capabilities'] = $capabilities;
                 $options['parameter'] = $parameter;
 
                 //On/Off設定
@@ -77,6 +83,7 @@ class WPTT_Admin extends WPTT_Core {
                 $errors->add( 'error', '不正な値が送信されました' );
                 set_transient( 'wptt-errors', $errors->get_error_messages(), 1 );
             }
+
         }
     }
 
@@ -117,46 +124,73 @@ class WPTT_Admin extends WPTT_Core {
         $options = get_option( WPTT_PLUGIN_NAME );
         // print_r($options);
 ?>
-<div class="wrap" >
+<div class="wrap">
 <h1>WP Theme Test</h1>
-<div class="dbx-content">
-<form name="form_apu" method="post" action="">
+<p>ログインしているユーザーにだけ、テーマを変更して見せることができます。</p>
+
+<form method="post" action="">
 <?php wp_nonce_field( 'wp-theme-test', '_wpnonce' ); ?>
 
-<h3>Current Status</h3>
-<p>
-<label><input type='radio' name='status' value='1' <?php if ( $this->is_enabled() ): ?>checked='checked'<?php endif; ?> /> On</label>
-<label><input type='radio' name='status' value='0' <?php if ( !$this->is_enabled() ): ?>checked='checked'<?php endif; ?> /> Off</label>
-</p>
+<table class="form-table">
 
-<hr>
+<tr>
+<th>現在の状態</th>
+<td>
+<label><input type='radio' name='status' value='1' <?php if ( $this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> On</label>
+<label style="margin-left:20px;"><input type='radio' name='status' value='0' <?php if ( !$this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> Off</label>
+</td>
+</tr>
 
-<h3>Usage</h3>
+<tr>
+<th>テーマ</th>
+<td>
 <?php $this->the_list_themes(); ?>
+<p class="description">
+選択したテーマを
+</p>
+</td>
+</tr>
 
-<hr>
+<tr>
+<th>権限グループ</th>
+<td>
+<?php
+        //権限グループを表示
+        $editable_roles = array_reverse( get_editable_roles() );
+?>
+<select name="capabilities[]" size="<?php echo count( $editable_roles ); ?>" multiple>
+<?php
+        foreach ( $editable_roles as $key => $value ) {
+            $name = translate_user_role( $value['name'] );
+            if ( in_array( $key, $options['capabilities'] ) ) {
+                echo '<option value="' . esc_attr( $key ) . '" selected="selected">'.$name.'</option>'.PHP_EOL;
+            }else {
+                echo '<option value="' . esc_attr( $key ) . '">'.$name.'</option>'.PHP_EOL;
+            }
+        }
+?>
+</select>
+</td>
+</tr>
 
-<h3>Access Level</h3>
-Access level<input name="level" value="<?php echo esc_attr( $options['level'] ); ?>" />
-
-<hr>
-
-<h3>パラメーターを有効にする</h3>
-<p>Additionally you may add "?theme=xxx" to your blog url, where xxx is the slug of the theme you want to test.</p>
+<tr>
+    <th>パラメーター機能</th>
+    <td>
 <select name="parameter">
 <option value="1" <?php if ( $this->get_parameter() ): ?>selected='selected'<?php endif; ?>>有効</option>
 <option value="0" <?php if ( !$this->get_parameter() ): ?>selected='selected'<?php endif; ?>>無効</option>
 </select>
-
-<hr>
-
-<p>
-<input type="submit" name="button" value="Save" class="button-primary" />
+<p class="description">
+Additionally you may add "?theme=xxx" to your blog url, where xxx is the slug of the theme you want to test.
 </p>
+    </td>
+</tr>
+</table>
+
+<p class="submit"><input type="submit" name="submit" value="変更を保存" class="button-primary" /></p>
 
 </form>
-</div>
-</div>
+</div><!-- /.wrap -->
 <?php
     }
 }

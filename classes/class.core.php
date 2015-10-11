@@ -4,7 +4,7 @@ class WPTT_Core {
     private $wptt_default_options = array(
         'status' => 0,
         'theme' => null,
-        'level' => 10,
+        'capabilities' => array('administrator'),
         'parameter' => 0,
     );
 
@@ -27,13 +27,29 @@ class WPTT_Core {
      *
      * @return string | bool
      */
-    function is_enabled() {
+    function is_test_enabled() {
         $options = get_option( WPTT_PLUGIN_NAME );
         if ( $options['status'] ) {
             return true;
         }
         return false;
     }
+
+
+    /**
+     * 権限グループを持っているかどうか
+     * @return boolean [description]
+     */
+    function has_capability() {
+        $options = get_option( WPTT_PLUGIN_NAME );
+        foreach ($options['capabilities'] as $key => $value) {
+            if( current_user_can($value) ){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * 設定レベルを取得

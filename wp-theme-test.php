@@ -54,10 +54,10 @@ class WP_Theme_Test extends WPTT_Core {
         }
 
         // ログイン状態とレベルをチェック
-        if ( current_user_can( $this->get_level() ) && $this->is_enabled() ) {
+        if ( $this->has_capability() && $this->is_test_enabled() ) {
 
             // 現在の設定されているテーマを取得
-            if ( ! $theme = $this->get_theme() ) {
+            if ( !$theme = $this->get_theme() ) {
                 return false;
             }
 
