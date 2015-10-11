@@ -1,5 +1,5 @@
 <?php
-class TTA_Admin extends TTA_Core {
+class WPTT_Admin extends WPTT_Core {
 
     /**
      * __construct
@@ -14,7 +14,7 @@ class TTA_Admin extends TTA_Core {
      * 管理画面に設定ページを追加
      */
     function add_pages() {
-        add_theme_page( 'Theme Test Admin', 'Theme Test Admin', 'edit_theme_options', TTA_PLUGIN_NAME, array( $this, 'options_page' ) );
+        add_theme_page( 'WP Theme Test', 'WP Theme Test', 'edit_theme_options', WPTT_PLUGIN_NAME, array( $this, 'options_page' ) );
     }
 
 
@@ -45,39 +45,38 @@ class TTA_Admin extends TTA_Core {
         /**
          * テストテーマのOn/Offを設定
          */
-        $errors = new WP_Error();
-        $updates = new WP_Error();
-
         if ( isset( $_POST['_wpnonce'] ) && $_POST['_wpnonce'] ) {
-            if ( check_admin_referer( 'theme-test-admin', '_wpnonce' ) ) {
+            $errors = new WP_Error();
+            $updates = new WP_Error();
+            if ( check_admin_referer( 'wp-theme-test', '_wpnonce' ) ) {
 
                 //オプションを設定
                 $theme = esc_html( $_POST['theme'] );
                 $level = esc_html( $_POST['level'] );
                 $parameter = esc_html( $_POST['parameter'] );
 
-                $options = get_option( TTA_PLUGIN_NAME );
+                $options = get_option( WPTT_PLUGIN_NAME );
                 $options['theme'] = $theme;
                 $options['level'] = $level;
                 $options['parameter'] = $parameter;
 
                 //On/Off設定
-                if ( esc_html($_POST['status']) == 1 ) {
+                if ( esc_html( $_POST['status'] ) == 1 ) {
                     $options['status'] = 1;
                 }else {
                     $options['status'] = 0;
                 }
 
-                update_option( TTA_PLUGIN_NAME, $options );
+                update_option( WPTT_PLUGIN_NAME, $options );
 
                 $updates->add( 'update', '保存しました' );
-                set_transient( 'tta-updates', $updates->get_error_messages(), 1 );
+                set_transient( 'wptt-updates', $updates->get_error_messages(), 1 );
 
-                // wp_safe_redirect( menu_page_url( TTA_PLUGIN_NAME, false ) );
+                // wp_safe_redirect( menu_page_url( WPTT_PLUGIN_NAME, false ) );
+            }else {
+                $errors->add( 'error', '不正な値が送信されました' );
+                set_transient( 'wptt-errors', $errors->get_error_messages(), 1 );
             }
-        }else{
-            $errors->add( 'error', '不正な値が送信されました' );
-            set_transient( 'tta-errors', $errors->get_error_messages(), 1 );
         }
     }
 
@@ -87,7 +86,7 @@ class TTA_Admin extends TTA_Core {
      */
     function admin_notices() {
 ?>
-    <?php if ( $messages = get_transient( 'tta-updates' ) ): ?>
+    <?php if ( $messages = get_transient( 'wptt-updates' ) ): ?>
     <div class="updated">
         <ul>
             <?php foreach ( $messages as $key => $message ) : ?>
@@ -97,7 +96,7 @@ class TTA_Admin extends TTA_Core {
     </div>
     <?php endif; ?>
 
- <?php if ( $messages = get_transient( 'tta-errors' ) ): ?>
+ <?php if ( $messages = get_transient( 'wptt-errors' ) ): ?>
     <div class="error">
         <ul>
             <?php foreach ( $messages as $key => $message ) : ?>
@@ -115,13 +114,14 @@ class TTA_Admin extends TTA_Core {
      */
     function options_page() {
         // 保存されている情報を取得
-        $options = get_option( TTA_PLUGIN_NAME );
+        $options = get_option( WPTT_PLUGIN_NAME );
+        // print_r($options);
 ?>
 <div class="wrap" >
-<h2>Theme Test Admin</h2>
+<h1>WP Theme Test</h1>
 <div class="dbx-content">
 <form name="form_apu" method="post" action="">
-<?php wp_nonce_field( 'theme-test-admin', '_wpnonce' ); ?>
+<?php wp_nonce_field( 'wp-theme-test', '_wpnonce' ); ?>
 
 <h3>Current Status</h3>
 <p>
@@ -160,4 +160,4 @@ Access level<input name="level" value="<?php echo esc_attr( $options['level'] );
 <?php
     }
 }
-new TTA_Admin();
+new WPTT_Admin();

@@ -1,14 +1,20 @@
 <?php
-class TTA_Core {
-    private $tta_options = array();
-    private $tta_default_options = array( 'status' => 0, 'theme' => null, 'level' => 10, 'parameter' => 0 );
+class WPTT_Core {
+    // プラグイン有効化時のデフォルトオプション
+    private $wptt_default_options = array(
+        'status' => 0,
+        'theme' => null,
+        'level' => 10,
+        'parameter' => 0,
+    );
 
     /**
      * 現在の設定されているテーマを取得する
+     *
      * @return [str] [description]
      */
     function get_theme() {
-        $options = get_option( TTA_PLUGIN_NAME );
+        $options = get_option( WPTT_PLUGIN_NAME );
         if ( !empty( $options['theme'] ) ) {
             return $options['theme'];
         } else {
@@ -18,11 +24,12 @@ class TTA_Core {
 
     /**
      * テストテーマが有効化されているかどうか
+     *
      * @return string | bool
      */
     function is_enabled() {
-        $options = get_option( TTA_PLUGIN_NAME );
-        if( $options['status'] ){
+        $options = get_option( WPTT_PLUGIN_NAME );
+        if ( $options['status'] ) {
             return true;
         }
         return false;
@@ -32,7 +39,7 @@ class TTA_Core {
      * 設定レベルを取得
      */
     function get_level() {
-        $options = get_option( TTA_PLUGIN_NAME );
+        $options = get_option( WPTT_PLUGIN_NAME );
         $level = $options['level'];
 
         if ( $level != '' ) {
@@ -40,14 +47,14 @@ class TTA_Core {
         } else {
             return 'level_10';
         }
-    }    
+    }
 
     /**
      * 現在のパラメーターを取得
      */
-    function get_parameter(){
-        $options = get_option( TTA_PLUGIN_NAME );
-        if( $options['parameter'] ){
+    function get_parameter() {
+        $options = get_option( WPTT_PLUGIN_NAME );
+        if ( $options['parameter'] ) {
             return true;
         }
         return false;
@@ -57,8 +64,8 @@ class TTA_Core {
      * プラグインが有効化されたときに実行
      */
     function activation_hook() {
-        if ( !get_option( TTA_PLUGIN_NAME ) ) {
-            update_option( TTA_PLUGIN_NAME, $this->tta_default_options );
+        if ( !get_option( WPTT_PLUGIN_NAME ) ) {
+            update_option( WPTT_PLUGIN_NAME, $this->wptt_default_options );
         }
     }
 
@@ -66,13 +73,13 @@ class TTA_Core {
      * 無効化ときに実行
      */
     function deactivation_hook() {
-        delete_option( TTA_PLUGIN_NAME );
+        delete_option( WPTT_PLUGIN_NAME );
     }
 
     /**
      * アンインストール時に実行
      */
-    function uninstall_hook(){
-        delete_option( TTA_PLUGIN_NAME );
-    }    
+    function uninstall_hook() {
+        delete_option( WPTT_PLUGIN_NAME );
+    }
 }

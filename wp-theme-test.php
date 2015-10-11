@@ -1,24 +1,24 @@
 <?php
 /*
-Plugin Name: Theme Test Admin
+Plugin Name: WP Theme Test
 Plugin URI: http://www.kigurumi.asia
 Description:
 Author: Nakashima Masahiro
 Version: 1.0.0
 Author URI: http://www.kigurumi.asia
-Text Domain: TTA
+Text Domain: WPTT
 Domain Path: /languages/
 */
-define( 'TTA_VERSION', '1.0.0' );
-define( 'TTA_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
-define( 'TTA_PLUGIN_NAME', trim( dirname( TTA_PLUGIN_BASENAME ), '/' ) );
-define( 'TTA_PLUGIN_DIR', untrailingslashit( dirname( __FILE__ ) ) );
-define( 'TTA_PLUGIN_URL', untrailingslashit( plugins_url( '', __FILE__ ) ) );
+define( 'WPTT_VERSION', '1.0.0' );
+define( 'WPTT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+define( 'WPTT_PLUGIN_NAME', trim( dirname( WPTT_PLUGIN_BASENAME ), '/' ) );
+define( 'WPTT_PLUGIN_DIR', untrailingslashit( dirname( __FILE__ ) ) );
+define( 'WPTT_PLUGIN_URL', untrailingslashit( plugins_url( '', __FILE__ ) ) );
 
-require_once TTA_PLUGIN_DIR . '/classes/class.core.php';
+require_once WPTT_PLUGIN_DIR . '/classes/class.core.php';
 
-class Theme_Test_Admin extends TTA_Core {
-    protected $textdomain = 'TTA';
+class WP_Theme_Test extends WPTT_Core {
+    protected $textdomain = 'WPTT';
 
     /**
      * __construct
@@ -40,7 +40,7 @@ class Theme_Test_Admin extends TTA_Core {
      */
     public function load_files() {
         // Classes
-        include_once TTA_PLUGIN_DIR . '/classes/class.admin.php';
+        include_once WPTT_PLUGIN_DIR . '/classes/class.admin.php';
     }
 
     /**
@@ -100,4 +100,4 @@ class Theme_Test_Admin extends TTA_Core {
         return $theme->get_stylesheet();
     }
 }
-$theme_test_admin = new Theme_Test_Admin();
+$wp_theme_test = new WP_Theme_Test();
