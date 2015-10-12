@@ -6,7 +6,7 @@ Description:
 Author: Nakashima Masahiro
 Version: 1.0.0
 Author URI: http://www.kigurumi.asia
-Text Domain: WPTT
+Text Domain: wptt
 Domain Path: /languages/
 */
 define( 'WPTT_VERSION', '1.0.0' );
@@ -14,17 +14,19 @@ define( 'WPTT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'WPTT_PLUGIN_NAME', trim( dirname( WPTT_PLUGIN_BASENAME ), '/' ) );
 define( 'WPTT_PLUGIN_DIR', untrailingslashit( dirname( __FILE__ ) ) );
 define( 'WPTT_PLUGIN_URL', untrailingslashit( plugins_url( '', __FILE__ ) ) );
+define( 'WPTT_TEXT_DOMAIN', 'wptt' );
 
 require_once WPTT_PLUGIN_DIR . '/classes/class.core.php';
 
 class WP_Theme_Test extends WPTT_Core {
-    protected $textdomain = 'WPTT';
 
     /**
      * __construct
      */
     public function __construct() {
-        //actions - plugins_loaded
+        //他言語化
+        load_plugin_textdomain( WPTT_TEXT_DOMAIN, false, basename( dirname( __FILE__ ) ) . '/languages/' );        
+        //actions
         add_action( 'init', array( $this, 'load_files' ) );
         //filters
         add_filter( 'template', array( $this, 'template_filter' ) );
@@ -54,10 +56,10 @@ class WP_Theme_Test extends WPTT_Core {
         }
 
         // ログイン状態とレベルをチェック
-        if ( current_user_can( $this->get_level() ) && $this->is_enabled() ) {
+        if ( $this->has_capability() && $this->is_test_enabled() ) {
 
             // 現在の設定されているテーマを取得
-            if ( ! $theme = $this->get_theme() ) {
+            if ( !$theme = $this->get_theme() ) {
                 return false;
             }
 
