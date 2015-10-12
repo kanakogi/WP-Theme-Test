@@ -9,6 +9,7 @@ class WPTT_Admin extends WPTT_Core {
 
         // プラグインページのみに制限
         if ( isset( $_REQUEST["page"] ) && $_REQUEST["page"] == WPTT_PLUGIN_NAME ) {
+            add_action( 'admin_print_styles', array( $this, 'head_css', ) );
             add_action( 'admin_notices', array( $this, 'admin_notices' ) );
             add_action( 'admin_init', array( $this, 'admin_init' ) );
         }
@@ -21,6 +22,12 @@ class WPTT_Admin extends WPTT_Core {
         add_theme_page( 'WP Theme Test', 'WP Theme Test', 'edit_theme_options', WPTT_PLUGIN_NAME, array( $this, 'options_page' ) );
     }
 
+    /**
+     * 管理画面CSS追加
+     */
+    public function head_css() {
+        wp_enqueue_style( "wptt_css", WPTT_PLUGIN_URL . '/css/styles.css' );
+    }
 
     /**
      * インストールテーマを表示し、テストが有効化されているテーマを表示する
@@ -125,7 +132,8 @@ class WPTT_Admin extends WPTT_Core {
         $options = get_option( WPTT_PLUGIN_NAME );
         // print_r($options);
 ?>
-<div class="wrap">
+<div class="plugin-wrap">
+<div class="plugin-main">
 <h1>WP Theme Test</h1>
 <p>ログインしているユーザーにだけ、テーマを変更して表示することができます。</p>
 
@@ -198,7 +206,44 @@ Ex: "<?php echo home_url(); ?>/?theme=<?php echo get_template(); ?>"
 <p class="submit"><input type="submit" name="submit" value="変更を保存" class="button-primary" /></p>
 
 </form>
-</div><!-- /.wrap -->
+</div><!-- /.plugin-main -->
+
+
+<div class="plugin-side">
+    <div class="plugin-side-inner">
+    <h3>Support</h3>
+<div class="box">
+<p>
+<a class="twitter-follow-button" href="https://twitter.com/kanakogi" data-show-count="false">
+Follow @kanakogi</a>
+</p>
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+ 
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+ 
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
+
+<p>
+BLOG: <a href="http://www.kigurumi.asia/" target="_blank">http://www.kigurumi.asia/</a>
+</p>
+</div>
+
+    </div><!-- /.plugin-side-inner -->
+</div><!-- /.plugin-side -->
+
+</div><!-- /.plugin-wrap -->
 <?php
     }
 }
