@@ -5,11 +5,12 @@ class WPTT_Admin extends WPTT_Core {
      * __construct
      */
     function __construct() {
-        //プラグインページのみに制限
+        add_action( 'admin_menu', array( $this, 'add_pages' ) );
+
+        // プラグインページのみに制限
         if ( isset( $_REQUEST["page"] ) && $_REQUEST["page"] == WPTT_PLUGIN_NAME ) {
-            add_action( 'admin_init', array( $this, 'admin_init' ) );
-            add_action( 'admin_menu', array( $this, 'add_pages' ) );
             add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+            add_action( 'admin_init', array( $this, 'admin_init' ) );
         }
     }
 
@@ -28,10 +29,10 @@ class WPTT_Admin extends WPTT_Core {
         $themes = wp_get_themes();
 
         if ( count( $themes ) > 1 ) {
-            $html = '<select name="theme" size="'.count( $themes ).'" style="height:auto;">';
+            $html = '<select name="theme">';
 
             foreach ( $themes as $theme ) {
-                if ( $this->get_theme() == $theme->get_template() ) {
+                if ( $this->get_theme() == $theme->get_template() || ( $this->get_theme() == null && $theme->get_template() == get_template() ) ) {
                     $html .= '<option value="' . $theme->get_template() . '" selected="selected">' . $theme->Name . '</option>' . PHP_EOL;
                 } else {
                     $html .= '<option value="' . $theme->get_template() . '">' . $theme->Name . '</option>' . PHP_EOL;
@@ -126,7 +127,7 @@ class WPTT_Admin extends WPTT_Core {
 ?>
 <div class="wrap">
 <h1>WP Theme Test</h1>
-<p>ログインしているユーザーにだけ、テーマを変更して見せることができます。</p>
+<p>ログインしているユーザーにだけ、テーマを変更して表示することができます。</p>
 
 <form method="post" action="">
 <?php wp_nonce_field( 'wp-theme-test', '_wpnonce' ); ?>
@@ -136,23 +137,24 @@ class WPTT_Admin extends WPTT_Core {
 <tr>
 <th>現在の状態</th>
 <td>
-<label><input type='radio' name='status' value='1' <?php if ( $this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> On</label>
-<label style="margin-left:20px;"><input type='radio' name='status' value='0' <?php if ( !$this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> Off</label>
+<label><input type='radio' name='status' value='1' <?php if ( $this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> <?php if ( $this->is_test_enabled() ): ?><strong><?php endif; ?>On<?php if ( $this->is_test_enabled() ): ?></strong><?php endif; ?></label>
+<label style="margin-left:20px;"><input type='radio' name='status' value='0' <?php if ( !$this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> <?php if ( ! $this->is_test_enabled() ): ?><strong><?php endif; ?>Off<?php if ( ! $this->is_test_enabled() ): ?></strong><?php endif; ?></label>
+
 </td>
 </tr>
 
 <tr>
-<th>テーマ</th>
+<th>テストテーマ</th>
 <td>
 <?php $this->the_list_themes(); ?>
 <p class="description">
-選択したテーマを
+選択したテーマをログインユーザーに表示します。
 </p>
 </td>
 </tr>
 
 <tr>
-<th>権限グループ</th>
+<th>表示する権限グループ</th>
 <td>
 <?php
         //権限グループを表示
@@ -170,6 +172,9 @@ class WPTT_Admin extends WPTT_Core {
         }
 ?>
 </select>
+<p class="description">
+テストテーマを表示するユーザーの権限グループ。複数選択可能。
+</p>
 </td>
 </tr>
 
@@ -181,7 +186,10 @@ class WPTT_Admin extends WPTT_Core {
 <option value="0" <?php if ( !$this->get_parameter() ): ?>selected='selected'<?php endif; ?>>無効</option>
 </select>
 <p class="description">
-Additionally you may add "?theme=xxx" to your blog url, where xxx is the slug of the theme you want to test.
+この機能を有効にすると現在の状態が「Off」でも、テストテーマを表示することができます。
+</p>
+<p class="description">
+Ex: "<?php echo home_url(); ?>/?theme=<?php echo get_template(); ?>"
 </p>
     </td>
 </tr>
