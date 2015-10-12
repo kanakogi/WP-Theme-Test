@@ -77,6 +77,17 @@ class WPTT_Core {
     }
 
     /**
+     * 翻訳用
+     */
+    public function e( $text ) {
+        _e( $text, WPTT_TEXT_DOMAIN );
+    }
+    
+    public function _( $text ) {
+        return __( $text, WPTT_TEXT_DOMAIN );
+    }
+
+    /**
      * プラグインが有効化されたときに実行
      */
     function activation_hook() {

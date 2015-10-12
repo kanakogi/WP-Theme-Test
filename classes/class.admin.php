@@ -39,10 +39,10 @@ class WPTT_Admin extends WPTT_Core {
             $html = '<select name="theme">';
 
             foreach ( $themes as $theme ) {
-                if ( $this->get_theme() == $theme->get_template() || ( $this->get_theme() == null && $theme->get_template() == get_template() ) ) {
-                    $html .= '<option value="' . $theme->get_template() . '" selected="selected">' . $theme->Name . '</option>' . PHP_EOL;
+                if ( $this->get_theme == $theme->get_template || ( $this->get_theme == null && $theme->get_template == get_template ) ) {
+                    $html .= '<option value="' . $theme->get_template . '" selected="selected">' . $theme->Name . '</option>' . PHP_EOL;
                 } else {
-                    $html .= '<option value="' . $theme->get_template() . '">' . $theme->Name . '</option>' . PHP_EOL;
+                    $html .= '<option value="' . $theme->get_template . '">' . $theme->Name . '</option>' . PHP_EOL;
                 }
             }
             $html .= '</select>';
@@ -83,12 +83,12 @@ class WPTT_Admin extends WPTT_Core {
 
                 update_option( WPTT_PLUGIN_NAME, $options );
 
-                $updates->add( 'update', '保存しました' );
+                $updates->add( 'update', $this->_( '保存しました' ) );
                 set_transient( 'wptt-updates', $updates->get_error_messages(), 1 );
 
                 // wp_safe_redirect( menu_page_url( WPTT_PLUGIN_NAME, false ) );
             }else {
-                $errors->add( 'error', '不正な値が送信されました' );
+                $errors->add( 'error', $this->_( '不正な値が送信されました' ) );
                 set_transient( 'wptt-errors', $errors->get_error_messages(), 1 );
             }
 
@@ -135,7 +135,7 @@ class WPTT_Admin extends WPTT_Core {
 <div class="plugin-wrap">
 <div class="plugin-main">
 <h1>WP Theme Test</h1>
-<p>ログインしているユーザーにだけ、テーマを変更して表示することができます。</p>
+<p><?php $this->e( 'ログインしているユーザーにだけ、テーマを変更して表示することができます。' ) ?></p>
 
 <form method="post" action="">
 <?php wp_nonce_field( 'wp-theme-test', '_wpnonce' ); ?>
@@ -143,7 +143,7 @@ class WPTT_Admin extends WPTT_Core {
 <table class="form-table">
 
 <tr>
-<th>現在の状態</th>
+<th><?php $this->e( '現在の状態' ) ?></th>
 <td>
 <label><input type='radio' name='status' value='1' <?php if ( $this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> <?php if ( $this->is_test_enabled() ): ?><strong><?php endif; ?>On<?php if ( $this->is_test_enabled() ): ?></strong><?php endif; ?></label>
 <label style="margin-left:20px;"><input type='radio' name='status' value='0' <?php if ( !$this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> <?php if ( ! $this->is_test_enabled() ): ?><strong><?php endif; ?>Off<?php if ( ! $this->is_test_enabled() ): ?></strong><?php endif; ?></label>
@@ -152,17 +152,17 @@ class WPTT_Admin extends WPTT_Core {
 </tr>
 
 <tr>
-<th>テストテーマ</th>
+<th><?php $this->e('テストテーマ') ?></th>
 <td>
 <?php $this->the_list_themes(); ?>
 <p class="description">
-選択したテーマをログインユーザーに表示します。
+<?php $this->e('選択したテーマをログインユーザーに表示します。') ?>
 </p>
 </td>
 </tr>
 
 <tr>
-<th>表示する権限グループ</th>
+<th><?php $this->e('表示する権限グループ') ?></th>
 <td>
 <?php
         //権限グループを表示
@@ -181,20 +181,20 @@ class WPTT_Admin extends WPTT_Core {
 ?>
 </select>
 <p class="description">
-テストテーマを表示するユーザーの権限グループ。複数選択可能。
+<?php $this->e('テストテーマを表示するユーザーの権限グループ。複数選択可能。') ?>
 </p>
 </td>
 </tr>
 
 <tr>
-    <th>パラメーター機能</th>
+    <th><?php $this->e('パラメーター機能') ?></th>
     <td>
 <select name="parameter">
-<option value="1" <?php if ( $this->get_parameter() ): ?>selected='selected'<?php endif; ?>>有効</option>
-<option value="0" <?php if ( !$this->get_parameter() ): ?>selected='selected'<?php endif; ?>>無効</option>
+<option value="1" <?php if ( $this->get_parameter() ): ?>selected='selected'<?php endif; ?>><?php $this->e('有効') ?></option>
+<option value="0" <?php if ( !$this->get_parameter() ): ?>selected='selected'<?php endif; ?>><?php $this->e('無効') ?></option>
 </select>
 <p class="description">
-この機能を有効にすると現在の状態が「Off」でも、テストテーマを表示することができます。
+<?php $this->e('この機能を有効にすると現在の状態が「Off」でも、テストテーマを表示することができます。') ?>
 </p>
 <p class="description">
 Ex: "<?php echo home_url(); ?>/?theme=<?php echo get_template(); ?>"
@@ -203,7 +203,7 @@ Ex: "<?php echo home_url(); ?>/?theme=<?php echo get_template(); ?>"
 </tr>
 </table>
 
-<p class="submit"><input type="submit" name="submit" value="変更を保存" class="button-primary" /></p>
+<p class="submit"><input type="submit" name="submit" value="<?php $this->e('変更を保存') ?>" class="button-primary" /></p>
 
 </form>
 </div><!-- /.plugin-main -->
@@ -212,19 +212,20 @@ Ex: "<?php echo home_url(); ?>/?theme=<?php echo get_template(); ?>"
 <div class="plugin-side">
     <div class="plugin-side-inner">
     <h3>Support</h3>
+
 <div class="box">
 <p>
 <a class="twitter-follow-button" href="https://twitter.com/kanakogi" data-show-count="false">
 Follow @kanakogi</a>
 </p>
 <script>window.twttr = (function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0],
+  var js, fjs = d.getElementsByTagNam$this->e(s)[0],
     t = window.twttr || {};
   if (d.getElementById(id)) return t;
   js = d.createElement(s);
   js.id = id;
   js.src = "https://platform.twitter.com/widgets.js";
-  fjs.parentNode.insertBefore(js, fjs);
+  fjs.parentNode.insertBefor$this->e(js, fjs);
  
   t._e = [];
   t.ready = function(f) {
@@ -236,7 +237,13 @@ Follow @kanakogi</a>
 
 
 <p>
-BLOG: <a href="http://www.kigurumi.asia/" target="_blank">http://www.kigurumi.asia/</a>
+BLOG:<br>
+<a href="http://www.kigurumi.asia/" target="_blank">http://www.kigurumi.asia/</a>
+</p>
+
+<p>
+GitHub:<br>
+<a href="https://github.com/kanakogi/WP-Theme-Test" target="_blank">WP Theme Test</a>
 </p>
 </div>
 
