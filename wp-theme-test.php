@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: WP Theme Test
-Plugin URI: http://www.kigurumi.asia
-Description:
+Plugin URI: https://github.com/kanakogi/WP-Theme-Test
+Description: The theme can be changed and displayed to only logged in users.
 Author: Nakashima Masahiro
 Version: 1.0.0
 Author URI: http://www.kigurumi.asia
