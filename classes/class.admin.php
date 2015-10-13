@@ -39,10 +39,10 @@ class WPTT_Admin extends WPTT_Core {
             $html = '<select name="theme">';
 
             foreach ( $themes as $theme ) {
-                if ( $this->get_theme == $theme->get_template || ( $this->get_theme == null && $theme->get_template == get_template ) ) {
-                    $html .= '<option value="' . $theme->get_template . '" selected="selected">' . $theme->Name . '</option>' . PHP_EOL;
+                if ( $this->get_theme() == $theme->get_template() || ( $this->get_theme() == null && $theme->get_template() == get_template() ) ) {
+                    $html .= '<option value="' . $theme->get_template() . '" selected="selected">' . $theme->Name . '</option>' . PHP_EOL;
                 } else {
-                    $html .= '<option value="' . $theme->get_template . '">' . $theme->Name . '</option>' . PHP_EOL;
+                    $html .= '<option value="' . $theme->get_template() . '">' . $theme->Name . '</option>' . PHP_EOL;
                 }
             }
             $html .= '</select>';
