@@ -215,34 +215,21 @@ Ex: "<?php echo home_url(); ?>/?theme=<?php echo get_template(); ?>"
 
 <div class="box">
 <p>
+<strong>Twitter</strong>:
 <a class="twitter-follow-button" href="https://twitter.com/kanakogi" data-show-count="false">
 Follow @kanakogi</a>
 </p>
-<script>window.twttr = (function(d, s, id) {
-  var js, fjs = d.getElementsByTagNam$this->e(s)[0],
-    t = window.twttr || {};
-  if (d.getElementById(id)) return t;
-  js = d.createElement(s);
-  js.id = id;
-  js.src = "https://platform.twitter.com/widgets.js";
-  fjs.parentNode.insertBefor$this->e(js, fjs);
- 
-  t._e = [];
-  t.ready = function(f) {
-    t._e.push(f);
-  };
- 
-  return t;
-}(document, "script", "twitter-wjs"));</script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 
 <p>
-BLOG:<br>
-<a href="http://www.kigurumi.asia/" target="_blank">http://www.kigurumi.asia/</a>
+<strong>BLOG</strong>:<br>    
+<?php $this->e( 'The detailed explanation of this plugin.(Japanese Only)' );?><br>
+<a href="http://www.kigurumi.asia/imake/4716/" target="_blank">http://www.kigurumi.asia/imake/4716/</a>
 </p>
 
 <p>
-GitHub:<br>
+<strong>GitHub</strong>:<br>
 <a href="https://github.com/kanakogi/WP-Theme-Test" target="_blank">WP Theme Test</a>
 </p>
 </div>
