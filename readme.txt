@@ -17,6 +17,9 @@ You can use this plugin instead of "Theme Test Drive".
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. The control panel of WP CSV Exporter is in 'Appearance > Theme Test Admin'.
 
+== Screenshots ==
+1. `/assets/screenshot-1.png`
+
 == Changelog ==
 **1.0.0 - 11 October 2015**  
 Initial release.
