@@ -18,7 +18,12 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 ## Description 
 
 The theme can be changed and displayed to only logged in users. 
-You can use this plugin instead of "Theme Test Drive".
+
+The visitors of the website see your old theme while you are testing the new one. 
+
+Only the administrator of the WordPress site sees the new theme that can now be tested safely.
+
+You can also use this plugin instead of "Theme Test Drive".
 
 ## Installation 
 
