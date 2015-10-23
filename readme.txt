@@ -15,12 +15,12 @@ The visitors of the website see your old theme while you are testing the new one
 
 Only the administrator of the WordPress site sees the new theme that can now be tested safely.
 
-You can also use this plugin instead of "Theme Test Drive".
+You can also use this plugin instead of "Theme Test Drive" plugin.
 
 == Installation ==
 1. Upload the entire `theme-test-admin` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. The control panel of WP CSV Exporter is in 'Appearance > Theme Test Admin'.
+3. The control panel of WP CSV Exporter is in 'Appearance > WP Theme Test'.
 
 == Screenshots ==
 1. `/assets/screenshot-1.png`
