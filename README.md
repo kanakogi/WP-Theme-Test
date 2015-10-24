@@ -33,5 +33,8 @@ You can also use this plugin instead of "Theme Test Drive".
 
 ## Changelog 
 
+**1.0.2 - 24 October 2015**  
+Change a default launguage to English from Japanes.
+
 **1.0.0 - 11 October 2015**  
 Initial release.

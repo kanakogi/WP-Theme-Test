@@ -83,12 +83,12 @@ class WPTT_Admin extends WPTT_Core {
 
                 update_option( WPTT_PLUGIN_NAME, $options );
 
-                $updates->add( 'update', $this->_( '保存しました' ) );
+                $updates->add( 'update', $this->_( 'Saved' ) );
                 set_transient( 'wptt-updates', $updates->get_error_messages(), 1 );
 
                 // wp_safe_redirect( menu_page_url( WPTT_PLUGIN_NAME, false ) );
             }else {
-                $errors->add( 'error', $this->_( '不正な値が送信されました' ) );
+                $errors->add( 'error', $this->_( 'An invalid value has been sent' ) );
                 set_transient( 'wptt-errors', $errors->get_error_messages(), 1 );
             }
 
@@ -135,7 +135,7 @@ class WPTT_Admin extends WPTT_Core {
 <div class="plugin-wrap">
 <div class="plugin-main">
 <h1>WP Theme Test</h1>
-<p><?php $this->e( 'ログインしているユーザーにだけ、テーマを変更して表示することができます。' ) ?></p>
+<p><?php $this->e( 'The theme can be changed and displayed to only logged in users.' ) ?></p>
 
 <form method="post" action="">
 <?php wp_nonce_field( 'wp-theme-test', '_wpnonce' ); ?>
@@ -143,7 +143,7 @@ class WPTT_Admin extends WPTT_Core {
 <table class="form-table">
 
 <tr>
-<th><?php $this->e( '現在の状態' ) ?></th>
+<th><?php $this->e( 'Current state' ) ?></th>
 <td>
 <label><input type='radio' name='status' value='1' <?php if ( $this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> <?php if ( $this->is_test_enabled() ): ?><strong><?php endif; ?>On<?php if ( $this->is_test_enabled() ): ?></strong><?php endif; ?></label>
 <label style="margin-left:20px;"><input type='radio' name='status' value='0' <?php if ( !$this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> <?php if ( ! $this->is_test_enabled() ): ?><strong><?php endif; ?>Off<?php if ( ! $this->is_test_enabled() ): ?></strong><?php endif; ?></label>
@@ -152,17 +152,17 @@ class WPTT_Admin extends WPTT_Core {
 </tr>
 
 <tr>
-<th><?php $this->e('テストテーマ') ?></th>
+<th><?php $this->e('Test Theme') ?></th>
 <td>
 <?php $this->the_list_themes(); ?>
 <p class="description">
-<?php $this->e('選択したテーマをログインユーザーに表示します。') ?>
+<?php $this->e('Display the selected theme to the user logged in.') ?>
 </p>
 </td>
 </tr>
 
 <tr>
-<th><?php $this->e('表示する権限グループ') ?></th>
+<th><?php $this->e('Role') ?></th>
 <td>
 <?php
         //権限グループを表示
@@ -181,20 +181,20 @@ class WPTT_Admin extends WPTT_Core {
 ?>
 </select>
 <p class="description">
-<?php $this->e('テストテーマを表示するユーザーの権限グループ。複数選択可能。') ?>
+<?php $this->e('User permission group for display of test themes. You can select more than one.') ?>
 </p>
 </td>
 </tr>
 
 <tr>
-    <th><?php $this->e('パラメーター機能') ?></th>
+    <th><?php $this->e('Parameter Function') ?></th>
     <td>
 <select name="parameter">
-<option value="1" <?php if ( $this->get_parameter() ): ?>selected='selected'<?php endif; ?>><?php $this->e('有効') ?></option>
-<option value="0" <?php if ( !$this->get_parameter() ): ?>selected='selected'<?php endif; ?>><?php $this->e('無効') ?></option>
+<option value="1" <?php if ( $this->get_parameter() ): ?>selected='selected'<?php endif; ?>><?php $this->e('Enable') ?></option>
+<option value="0" <?php if ( !$this->get_parameter() ): ?>selected='selected'<?php endif; ?>><?php $this->e('Disable') ?></option>
 </select>
 <p class="description">
-<?php $this->e('この機能を有効にすると現在の状態が「Off」でも、テストテーマを表示することができます。') ?>
+<?php $this->e('When this function is enable the test theme can be displayed even when the current state is "Off."') ?>
 </p>
 <p class="description">
 Ex: "<?php echo home_url(); ?>/?theme=<?php echo get_template(); ?>"
@@ -203,7 +203,7 @@ Ex: "<?php echo home_url(); ?>/?theme=<?php echo get_template(); ?>"
 </tr>
 </table>
 
-<p class="submit"><input type="submit" name="submit" value="<?php $this->e('変更を保存') ?>" class="button-primary" /></p>
+<p class="submit"><input type="submit" name="submit" value="<?php $this->e('Save') ?>" class="button-primary" /></p>
 
 </form>
 </div><!-- /.plugin-main -->
