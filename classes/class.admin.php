@@ -162,7 +162,7 @@ class WPTT_Admin extends WPTT_Core {
 </tr>
 
 <tr>
-<th><?php $this->e('Role') ?></th>
+<th><?php $this->e('Roles') ?></th>
 <td>
 <?php
         //権限グループを表示

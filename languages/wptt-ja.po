@@ -17,7 +17,7 @@ msgstr ""
 msgid "Display the selected theme to the user logged in."
 msgstr "選択したテーマをログインユーザーに表示します。"
 
-msgid "Role"
+msgid "Roles"
 msgstr "表示する権限グループ"
 
 msgid ""
