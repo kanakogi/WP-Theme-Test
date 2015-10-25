@@ -4,12 +4,12 @@ Plugin Name: WP Theme Test
 Plugin URI: https://github.com/kanakogi/WP-Theme-Test
 Description: The theme can be changed and displayed to only logged in users.
 Author: Nakashima Masahiro
-Version: 1.0.2
+Version: 1.0.3
 Author URI: http://www.kigurumi.asia
 Text Domain: wptt
 Domain Path: /languages/
 */
-define( 'WPTT_VERSION', '1.0.2' );
+define( 'WPTT_VERSION', '1.0.3' );
 define( 'WPTT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'WPTT_PLUGIN_NAME', trim( dirname( WPTT_PLUGIN_BASENAME ), '/' ) );
 define( 'WPTT_PLUGIN_DIR', untrailingslashit( dirname( __FILE__ ) ) );

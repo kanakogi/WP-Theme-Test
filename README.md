@@ -8,7 +8,7 @@ Requires at least: 3.0 or higher
 
 Tested up to: 4.3
 
-Stable tag: 1.0.0
+Stable tag: 1.0.3
 
 License: GPLv2 or later
 
@@ -32,6 +32,9 @@ You can also use this plugin instead of "Theme Test Drive".
 3. The control panel of WP CSV Exporter is in 'Appearance > Theme Test Admin'.
 
 ## Changelog 
+
+**1.0.3 - 25 October 2015**  
+Add wptt-fr_FR.po. Thanks Frank!
 
 **1.0.2 - 24 October 2015**  
 Change a default launguage to English from Japanes.

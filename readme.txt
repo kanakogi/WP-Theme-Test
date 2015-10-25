@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/2TUGZOYJW8T4T/?_encoding=
 Tags: : page, pages,theme, themes
 Requires at least: 3.0 or higher
 Tested up to: 4.3
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,9 @@ You can also use this plugin instead of "Theme Test Drive" plugin.
 1. `/assets/screenshot-1.png`
 
 == Changelog ==
+**1.0.3 - 25 October 2015**  
+Add wptt-fr_FR.po. Thanks Frank!
+
 **1.0.2 - 24 October 2015**  
 Change a default launguage to English from Japanes.
 
