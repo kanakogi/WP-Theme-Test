@@ -29,9 +29,11 @@ You can also use this plugin instead of "Theme Test Drive".
 
 1. Upload the entire `theme-test-admin` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. The control panel of WP CSV Exporter is in 'Appearance > Theme Test Admin'.
+3. The control panel of WP Theme Test is in 'Appearance > WP Theme Test'.
 
 ## Changelog 
+**1.0.4 - 4 November 2015**  
+modify readme.txt
 
 **1.0.3 - 25 October 2015**  
 Add wptt-fr_FR.po. Thanks Frank!
