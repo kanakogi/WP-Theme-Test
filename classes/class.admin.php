@@ -220,11 +220,12 @@ Ex: "<?php echo home_url(); ?>/?theme=<?php echo get_template(); ?>"
   <?php $this->e('IP Address') ?>
 </th>
 <td>
-<textarea name="ip_list" rows="4" cols="60" placeholder="123.45.678.90&#13;&#10;100.11.100.11">
+<textarea name="ip_list" rows="4" cols="60" placeholder="123.45.678.90&#13;&#10;<?php echo $_SERVER['REMOTE_ADDR']; ?>">
 <?php echo $options['ip_list'] ?>
 </textarea>
 <p class="description">
-<?php $this->e('These IP address users can display the test theme.') ?>
+<?php $this->e('These IP address users can display the test theme.') ?><br>
+<?php $this->e('Your current IP is:'); echo $_SERVER['REMOTE_ADDR']; ?>
 </p>
 </td>
 </tr>

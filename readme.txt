@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/2TUGZOYJW8T4T/?_encoding=
 Tags: : page, pages,theme, themes
 Requires at least: 3.0 or higher
 Tested up to: 4.3
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,8 +26,8 @@ You can also use this plugin instead of "Theme Test Drive" plugin.
 1. `/assets/screenshot-1.png`
 
 == Changelog ==
-**1.0.5 - 5 December 2015**
-New feature : Display the theme test by IP address
+**1.0.6 - 5 December 2015**
+New feature : Display the theme test by IP address. Thanks <a href="https://wordpress.org/support/profile/toto/" target="_blank">toto</a>!
 
 **1.0.4 - 4 November 2015**
 modify readme.txt

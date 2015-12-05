@@ -8,7 +8,7 @@ Requires at least: 3.0 or higher
 
 Tested up to: 4.3
 
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 
 License: GPLv2 or later
 
@@ -32,8 +32,8 @@ You can also use this plugin instead of "Theme Test Drive".
 3. The control panel of WP Theme Test is in 'Appearance > WP Theme Test'.
 
 ## Changelog 
-**1.0.5 - 5 December 2015**   
-New feature : Display the theme test by IP address
+**1.0.6 - 5 December 2015**   
+New feature : Display the theme test by IP address. Thanks [toto](https://wordpress.org/support/profile/toto)!
 
 **1.0.4 - 4 November 2015**  
 modify readme.txt
