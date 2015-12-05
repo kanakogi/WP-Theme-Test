@@ -6,6 +6,7 @@ class WPTT_Core {
         'theme' => null,
         'capabilities' => array('administrator'),
         'parameter' => 0,
+        'ip_list' => null,
     );
 
     /**
@@ -79,12 +80,23 @@ class WPTT_Core {
     }
 
     /**
+     * IPアドレスを取得
+     */
+    function get_ip_list() {
+        $options = get_option( WPTT_PLUGIN_NAME );
+        if ( $options['ip_list'] ) {
+            return $options['ip_list'];
+        }
+        return false;
+    }
+
+    /**
      * 翻訳用
      */
     public function e( $text ) {
         _e( $text, WPTT_TEXT_DOMAIN );
     }
-    
+
     public function _( $text ) {
         return __( $text, WPTT_TEXT_DOMAIN );
     }

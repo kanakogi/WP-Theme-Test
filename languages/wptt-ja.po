@@ -55,3 +55,7 @@ msgstr "無効"
 
 msgid "Save"
 msgstr "変更を保存"
+
+msgid "These IP address users can display the test theme."
+msgstr ""
+"この固定IPアドレスのユーザーにだけ、テストテーマを表示することができます。"

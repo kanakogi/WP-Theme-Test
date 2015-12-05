@@ -4,12 +4,12 @@ Plugin Name: WP Theme Test
 Plugin URI: https://github.com/kanakogi/WP-Theme-Test
 Description: The theme can be changed and displayed to only logged in users.
 Author: Nakashima Masahiro
-Version: 1.0.4
+Version: 1.0.5
 Author URI: http://www.kigurumi.asia
 Text Domain: wptt
 Domain Path: /languages/
 */
-define( 'WPTT_VERSION', '1.0.4' );
+define( 'WPTT_VERSION', '1.0.5' );
 define( 'WPTT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'WPTT_PLUGIN_NAME', trim( dirname( WPTT_PLUGIN_BASENAME ), '/' ) );
 define( 'WPTT_PLUGIN_DIR', untrailingslashit( dirname( __FILE__ ) ) );
@@ -25,7 +25,7 @@ class WP_Theme_Test extends WPTT_Core {
      */
     public function __construct() {
         //他言語化
-        load_plugin_textdomain( WPTT_TEXT_DOMAIN, false, basename( dirname( __FILE__ ) ) . '/languages/' );        
+        load_plugin_textdomain( WPTT_TEXT_DOMAIN, false, basename( dirname( __FILE__ ) ) . '/languages/' );
         //actions
         add_action( 'init', array( $this, 'load_files' ) );
         //filters
@@ -53,6 +53,16 @@ class WP_Theme_Test extends WPTT_Core {
         if ( isset( $_GET['theme'] ) && $this->get_parameter() ) {
             $theme_object = wp_get_theme( esc_html( $_GET['theme'] ) );
             return $theme_object;
+        }
+
+        //IPアドレスでも変えれるようにする
+        if ( $this->get_ip_list() ) {
+            $ip_list = $this->get_ip_list();
+            $ip_list = str_replace(array("\r\n", "\n", "\r"),"\n",$ip_list); //改行を\nに統一
+            $ip_list = explode( "\n", $ip_list );
+            if( in_array($_SERVER['REMOTE_ADDR'], $ip_list) ){
+              return wp_get_theme( $this->get_theme() );
+            }
         }
 
         // ログイン状態とレベルをチェック

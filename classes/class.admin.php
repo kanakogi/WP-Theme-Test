@@ -68,11 +68,13 @@ class WPTT_Admin extends WPTT_Core {
                     $capabilities[] = esc_html( $value );
                 }
                 $parameter = esc_html( $_POST['parameter'] );
+                $ip_list = esc_html( $_POST['ip_list'] );
 
                 $options = get_option( WPTT_PLUGIN_NAME );
                 $options['theme'] = $theme;
                 $options['capabilities'] = $capabilities;
                 $options['parameter'] = $parameter;
+                $options['ip_list'] = $ip_list;
 
                 //On/Off設定
                 if ( esc_html( $_POST['status'] ) == 1 ) {
@@ -143,21 +145,24 @@ class WPTT_Admin extends WPTT_Core {
 <table class="form-table">
 
 <tr>
-<th><?php $this->e( 'Current state' ) ?></th>
-<td>
-<label><input type='radio' name='status' value='1' <?php if ( $this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> <?php if ( $this->is_test_enabled() ): ?><strong><?php endif; ?>On<?php if ( $this->is_test_enabled() ): ?></strong><?php endif; ?></label>
-<label style="margin-left:20px;"><input type='radio' name='status' value='0' <?php if ( !$this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> <?php if ( ! $this->is_test_enabled() ): ?><strong><?php endif; ?>Off<?php if ( ! $this->is_test_enabled() ): ?></strong><?php endif; ?></label>
-
-</td>
-</tr>
-
-<tr>
 <th><?php $this->e('Test Theme') ?></th>
 <td>
 <?php $this->the_list_themes(); ?>
 <p class="description">
 <?php $this->e('Display the selected theme to the user logged in.') ?>
 </p>
+</td>
+</tr>
+</table>
+
+<hr>
+
+<table class="form-table">
+<tr>
+<th><?php $this->e( 'Current state' ) ?></th>
+<td>
+<label><input type='radio' name='status' value='1' <?php if ( $this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> <?php if ( $this->is_test_enabled() ): ?><strong><?php endif; ?>On<?php if ( $this->is_test_enabled() ): ?></strong><?php endif; ?></label>
+<label style="margin-left:20px;"><input type='radio' name='status' value='0' <?php if ( !$this->is_test_enabled() ): ?>checked='checked'<?php endif; ?> /> <?php if ( ! $this->is_test_enabled() ): ?><strong><?php endif; ?>Off<?php if ( ! $this->is_test_enabled() ): ?></strong><?php endif; ?></label>
 </td>
 </tr>
 
@@ -185,7 +190,11 @@ class WPTT_Admin extends WPTT_Core {
 </p>
 </td>
 </tr>
+</table>
 
+<hr>
+
+<table class="form-table">
 <tr>
     <th><?php $this->e('Parameter Function') ?></th>
     <td>
@@ -201,6 +210,25 @@ Ex: "<?php echo home_url(); ?>/?theme=<?php echo get_template(); ?>"
 </p>
     </td>
 </tr>
+</table>
+
+<hr>
+
+<table class="form-table">
+<tr>
+<th>
+  <?php $this->e('IP Address') ?>
+</th>
+<td>
+<textarea name="ip_list" rows="4" cols="60" placeholder="123.45.678.90&#13;&#10;100.11.100.11">
+<?php echo $options['ip_list'] ?>
+</textarea>
+<p class="description">
+<?php $this->e('These IP address users can display the test theme.') ?>
+</p>
+</td>
+</tr>
+
 </table>
 
 <p class="submit"><input type="submit" name="submit" value="<?php $this->e('Save') ?>" class="button-primary" /></p>
@@ -223,7 +251,7 @@ Follow @kanakogi</a>
 
 
 <p>
-<strong>BLOG</strong>:<br>    
+<strong>BLOG</strong>:<br>
 <?php $this->e( 'The detailed explanation of this plugin.(Japanese Only)' );?><br>
 <a href="http://www.kigurumi.asia/imake/4716/" target="_blank">http://www.kigurumi.asia/imake/4716/</a>
 </p>
