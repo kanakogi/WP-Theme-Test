@@ -39,10 +39,10 @@ class WPTT_Admin extends WPTT_Core {
             $html = '<select name="theme">';
 
             foreach ( $themes as $theme ) {
-                if ( $this->get_theme() == $theme->get_template() || ( $this->get_theme() == null && $theme->get_template() == get_template() ) ) {
-                    $html .= '<option value="' . $theme->get_template() . '" selected="selected">' . $theme->Name . '</option>' . PHP_EOL;
+                if ( $this->get_theme() == $theme->get_stylesheet() || ( $this->get_theme() == null && $theme->get_template() == get_stylesheet() ) ) {
+                    $html .= '<option value="' . $theme->get_stylesheet() . '" selected="selected">' . $theme->Name . '</option>' . PHP_EOL;
                 } else {
-                    $html .= '<option value="' . $theme->get_template() . '">' . $theme->Name . '</option>' . PHP_EOL;
+                    $html .= '<option value="' . $theme->get_stylesheet() . '">' . $theme->Name . '</option>' . PHP_EOL;
                 }
             }
             $html .= '</select>';
@@ -206,7 +206,8 @@ class WPTT_Admin extends WPTT_Core {
 <?php $this->e('When this function is enable the test theme can be displayed even when the current state is "Off."') ?>
 </p>
 <p class="description">
-Ex: "<?php echo home_url(); ?>/?theme=<?php echo get_template(); ?>"
+<?php $example_url = home_url('/') . '?theme=' . $this->get_theme(); ?>
+Ex: <a href="<?php echo $example_url; ?>" target="_blank"><?php echo $example_url; ?></a>
 </p>
     </td>
 </tr>
