@@ -43,7 +43,7 @@ class WPTT_Core {
      */
     function has_capability() {
         $options = get_option( WPTT_PLUGIN_NAME );
-        if(!empty($options)){
+        if(!empty($options)) if (!empty($options['capabilities']) ) {
             foreach ($options['capabilities'] as $key => $value) {
                 if( current_user_can($value) ){
                     return true;
