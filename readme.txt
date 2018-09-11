@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/2TUGZOYJW8T4T/?_encoding=
 Tags: : page, pages,theme, themes
 Requires at least: 3.0 or higher
 Tested up to: 4.9.8
-Stable tag: 1.0.9
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,9 @@ You can also use this plugin instead of "Theme Test Drive" plugin.
 1. `/assets/screenshot-1.png`
 
 == Changelog ==
+**1.1.0 - 11 Sep 2018**
+Minor Fix. Thanks <a href="https://github.com/pandaj" target="_blank">pandaj</a>!
+
 **1.0.8 - 17 April 2016**
 Modify text in admin panel.
 
